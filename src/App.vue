@@ -3,10 +3,14 @@
 
 <template>
   <div class="background">
+    <div class="top-bar">
+        <span>???,??? AD</span>
+        <span>SCAVENGER OS v0.01</span>
+        <span>9:15 PM</span>
+    </div>
     <div class="game-container">
       <div class="resources">
-        Resources!
-        <!-- <resources></resources> -->
+        <Resources></Resources>
       </div>
       <!-- <div>
         <border></border>
@@ -23,10 +27,24 @@
 </template>
 <script setup lang="ts">
 import Logger from './components/logger.vue';
+import Resources from './components/Resources.vue';
 
 </script>
 
-<style >
+<style>
+.top-bar {
+    font-family: 'Gelatin';
+    min-height: 27px;
+    background-color: black;
+    border-bottom: 3px ridge white;
+    color: white;
+    font-size: 16pt;
+    display:flex;
+    justify-content: space-between;
+    gap:10px;
+    padding: 0 5px;
+}
+
   .background {
     position: absolute;
     top: 0;
@@ -41,7 +59,7 @@ import Logger from './components/logger.vue';
   .game-container {
     display: flex;
     align-items: stretch;
-    height: 100%;
+    height: calc(100% - 30px);
     background-color: #1f1f1f;
   }
 
