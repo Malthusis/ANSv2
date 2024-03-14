@@ -16,12 +16,15 @@
         <!-- <bonfire></bonfire> -->
       </div>
       <div class="logs">
-        Logs!
-        <!-- <logger></logger> -->
+        <Logger></Logger>
       </div>
     </div>
   </div>
 </template>
+<script setup lang="ts">
+import Logger from './components/logger.vue';
+
+</script>
 
 <style >
   .background {

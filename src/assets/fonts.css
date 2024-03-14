@@ -1,0 +1,9 @@
+@font-face {
+    font-family: Gelatin;
+    src: url("src/assets/fonts/GelatinMonoTTF.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: GelatinCaps;
+    src: url("src/assets/fonts/GelatinTTFCAPS.ttf") format("truetype");
+}
