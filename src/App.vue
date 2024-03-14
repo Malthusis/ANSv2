@@ -1,85 +1,79 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <div class="background">
+    <div class="game-container">
+      <div class="resources">
+        Resources!
+        <!-- <resources></resources> -->
+      </div>
+      <!-- <div>
+        <border></border>
+      </div> -->
+      <div class="bonfire">
+        Bonfire!
+        <!-- <bonfire></bonfire> -->
+      </div>
+      <div class="logs">
+        Logs!
+        <!-- <logger></logger> -->
+      </div>
     </div>
-  </header>
-
-  <RouterView />
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<style >
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: black;
+  }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
+  .game-container {
     display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+    align-items: stretch;
+    height: 100%;
+    background-color: #1f1f1f;
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
+  resources {
+    height: 100%
   }
 
-  header .wrapper {
+  border {
+    height: 100%;
+  }
+
+  bonfire {
+    height: 100%;
+    width: auto;
+  }
+
+  .bonfire {
+      display: flex;
+      flex-flow: column;
+      padding: 80px 10px 10px;
+      width: 100vw;
+      min-width: 400px;
+      height: calc(100% - 90px);
+  }
+
+  .logs {
     display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+    flex-flow: column;
+    width: 240px;
+    min-width: 240px;
+    padding: 80px 10px 10px;
+    border-left-style: solid;
+    border-width: 3px;
+    border-color: #ffc107;
+    background-color: black;
+    height: calc(100% - 90px);
   }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>
