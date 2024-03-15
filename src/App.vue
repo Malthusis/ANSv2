@@ -1,12 +1,9 @@
-<script setup lang="ts">
-</script>
-
 <template>
   <div class="background">
     <div class="top-bar">
         <span>???,??? AD</span>
         <span>SCAVENGER OS v0.01</span>
-        <span>9:15 PM</span>
+        <span>{{ utils.getDisplayTime }}</span>
     </div>
     <div class="game-container">
       <div class="resources">
@@ -23,9 +20,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import Logger from './components/logger.vue';
+import Logger from './components/Logger.vue';
 import Resources from './components/Resources.vue';
 import Bonfire from './components/Bonfire.vue'
+import { useUtils } from './stores/utilsStore';
+
+const utils = useUtils();
+utils.startClock();
 
 
 </script>
