@@ -7,3 +7,13 @@
     font-family: GelatinCaps;
     src: url("src/assets/fonts/GelatinTTFCAPS.ttf") format("truetype");
 }
+
+@font-face {
+    font-family: Squarebit;
+    src: url("src/assets/fonts/Squarebit.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: Squarebit2x;
+    src: url("src/assets/fonts/Squarebit2Px.ttf") format("truetype");
+}

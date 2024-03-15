@@ -13,10 +13,14 @@ const logs = useLogs()
 </script>
 <style>
 .log {
-  font-family: 'Gelatin';
-  font-size: 24px;
+    
+  /* font-family: 'Gelatin';
+  font-size: 20px; */
+
+  font-family: 'Squarebit2x';
+  font-size: 18px;
   margin: 10px 0;
-  color: white;
+  color: #878e93;
   animation: textShadow 1.6s infinite;
   pointer-events: none;
 }

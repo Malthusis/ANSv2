@@ -12,12 +12,9 @@
       <div class="resources">
         <Resources></Resources>
       </div>
-      <!-- <div>
-        <border></border>
-      </div> -->
       <div class="bonfire">
-        Bonfire!
-        <!-- <bonfire></bonfire> -->
+
+        <Bonfire></Bonfire>
       </div>
       <div class="logs">
         <Logger></Logger>
@@ -28,6 +25,8 @@
 <script setup lang="ts">
 import Logger from './components/logger.vue';
 import Resources from './components/Resources.vue';
+import Bonfire from './components/Bonfire.vue'
+
 
 </script>
 
@@ -51,7 +50,7 @@ import Resources from './components/Resources.vue';
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: black;
+    /* background-color: black; */
   }
 
 
@@ -60,7 +59,7 @@ import Resources from './components/Resources.vue';
     display: flex;
     align-items: stretch;
     height: calc(100% - 30px);
-    background-color: #1f1f1f;
+    /* background-color: #1f1f1f; */
   }
 
   resources {
@@ -74,6 +73,10 @@ import Resources from './components/Resources.vue';
   bonfire {
     height: 100%;
     width: auto;
+  }
+
+  .resources {
+    border-right: 5px ridge #ffc107;
   }
 
   .bonfire {
@@ -90,11 +93,9 @@ import Resources from './components/Resources.vue';
     flex-flow: column;
     width: 240px;
     min-width: 240px;
-    padding: 80px 10px 10px;
-    border-left-style: solid;
-    border-width: 3px;
-    border-color: #ffc107;
+    padding: 40px 10px 10px;
+    border-left: 3px ridge #ffc107;
     background-color: black;
-    height: calc(100% - 90px);
+    /* height: calc(100% - 90px); */
   }
 </style>

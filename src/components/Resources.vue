@@ -16,9 +16,8 @@
   padding: 40px 10px 10px;
   font-family: 'GelatinCaps';
   animation: textShadow 1.6s infinite;
-  background-color: black;
   height: calc(100% - 50px); 
-  border-right: 7px solid #303329;
+  
 }
 
 </style>
