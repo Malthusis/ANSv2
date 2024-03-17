@@ -1,6 +1,6 @@
 <template>
   <div class="background">
-    <button class="fire-button" v-if="!gameFlags.flagList.get(FlagEnum.FIRE_STARTED)" @click="gameFlags.setFlag(FlagEnum.FIRE_STARTED, true)">Make Fire</button>
+    <button class="fire-button" v-if="!gameFlags.flagList.get(FlagEnum.FIRE_STARTED)" @click="startFire()">Start a fire.</button>
     <div class="top-bar" :class="{hidden: !gameFlags.flagList.get(FlagEnum.FIRE_STARTED)}">
         <span>???,??? AD</span>
         <span>SCAVENGER OS v0.01</span>
@@ -26,10 +26,20 @@ import Bonfire from './components/Bonfire.vue'
 import { useUtils } from './stores/utilsStore';
 import { useGameFlags } from './stores/gameFlags';
 import { FlagEnum } from './enums/flagEnum';
+import { useLogs } from './stores/logStore';
 
 const utils = useUtils();
 const gameFlags = useGameFlags();
+const logs = useLogs();
 utils.startClock();
+
+
+function startFire() {
+    gameFlags.setFlag(FlagEnum.FIRE_STARTED, true)
+    setTimeout(function() {
+        logs.pushLog("The fire crackles as it comes to life.")
+    }, 2000)
+}
 
 
 </script>
@@ -46,7 +56,6 @@ utils.startClock();
     justify-content: space-between;
     gap:10px;
     padding: 0 5px;
-    transition: opacity .5s ease-out;
 }
 
   .background {

@@ -8,7 +8,6 @@
 <script setup lang="ts">
 import { useLogs } from '@/stores/logStore';
 
-
 const logs = useLogs()
 </script>
 <style>
