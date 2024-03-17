@@ -1,16 +1,16 @@
 <template>
   <div class="background">
-    <div class="top-bar">
+    <button class="fire-button" v-if="!gameFlags.flagList.get(FlagEnum.FIRE_STARTED)" @click="gameFlags.setFlag(FlagEnum.FIRE_STARTED, true)">Make Fire</button>
+    <div class="top-bar" :class="{hidden: !gameFlags.flagList.get(FlagEnum.FIRE_STARTED)}">
         <span>???,??? AD</span>
         <span>SCAVENGER OS v0.01</span>
         <span>{{ utils.getDisplayTime }}</span>
     </div>
-    <div class="game-container">
-      <div class="resources">
+    <div class="game-container" :class="{hidden: !gameFlags.flagList.get(FlagEnum.FIRE_STARTED)}">
+      <div class="resources" >
         <Resources></Resources>
       </div>
-      <div class="bonfire">
-
+      <div class="bonfire" >
         <Bonfire></Bonfire>
       </div>
       <div class="logs">
@@ -24,8 +24,11 @@ import Logger from './components/Logger.vue';
 import Resources from './components/Resources.vue';
 import Bonfire from './components/Bonfire.vue'
 import { useUtils } from './stores/utilsStore';
+import { useGameFlags } from './stores/gameFlags';
+import { FlagEnum } from './enums/flagEnum';
 
 const utils = useUtils();
+const gameFlags = useGameFlags();
 utils.startClock();
 
 
@@ -43,6 +46,7 @@ utils.startClock();
     justify-content: space-between;
     gap:10px;
     padding: 0 5px;
+    transition: opacity .5s ease-out;
 }
 
   .background {
@@ -51,7 +55,6 @@ utils.startClock();
     left: 0;
     right: 0;
     bottom: 0;
-    /* background-color: black; */
   }
 
 
@@ -60,7 +63,7 @@ utils.startClock();
     display: flex;
     align-items: stretch;
     height: calc(100% - 30px);
-    /* background-color: #1f1f1f; */
+    transition: opacity 2s ease;
   }
 
   resources {
@@ -81,12 +84,11 @@ utils.startClock();
   }
 
   .bonfire {
-      display: flex;
-      flex-flow: column;
-      padding: 80px 10px 10px;
-      width: 100vw;
-      min-width: 400px;
-      height: calc(100% - 90px);
+    display: flex;
+    flex-flow: column;
+    width: 100vw;
+    min-width: 400px;
+    height: 100%;
   }
 
   .logs {
@@ -97,6 +99,17 @@ utils.startClock();
     padding: 40px 10px 10px;
     border-left: 3px ridge #ffc107;
     background-color: black;
-    /* height: calc(100% - 90px); */
   }
+
+  .hidden {
+    opacity: 0;
+  }
+
+  .fire-button {
+    position:absolute;
+    z-index: 2;
+    opacity: 1 !important;
+    top: calc(50% - 37px);
+    left: 45%;
+}
 </style>

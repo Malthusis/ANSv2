@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useLogs = defineStore('logs', () => {
-    const logQueue = ref(["Welcome to ANS.", "Test2"] as string[])
+    const logQueue = ref(["The fire crackles as it illuminates your surroundings."] as string[])
 
     function pushLog(log: string) {
         logQueue.value.push(log)

@@ -24,9 +24,5 @@ export const useUtils = defineStore('utils', () => {
         gameClock.value = new Date();
     }
 
-
-
-
-
   return { gameClock, getDisplayTime, startClock }
 })
