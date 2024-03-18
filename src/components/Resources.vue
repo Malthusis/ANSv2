@@ -3,6 +3,7 @@
   <span>STABILITY 10/10</span>
   <span>ENERGY 40/40</span>
   <span>STATUS:  <span style="color:green;">OK!</span><br> </span>
+  
 </div> 
 </template>
 <style>
@@ -17,7 +18,6 @@
   font-family: 'GelatinCaps';
   animation: textShadow 1.6s infinite;
   height: calc(100% - 50px); 
-  
 }
 
 </style>

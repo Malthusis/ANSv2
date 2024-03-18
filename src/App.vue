@@ -5,13 +5,19 @@
         <span>???,??? AD</span>
         <span>SCAVENGER OS v0.01</span>
         <span>{{ utils.getDisplayTime }}</span>
+        <button @click="changePanel(Panel.EXPLORE)">Panel</button>
     </div>
     <div class="game-container" :class="{hidden: !gameFlags.flagList.get(FlagEnum.FIRE_STARTED)}">
       <div class="resources" >
         <Resources></Resources>
       </div>
-      <div class="bonfire" >
-        <Bonfire></Bonfire>
+      <div class="center">
+        <!-- <div :class="{hidden: !gameFlags.flagList.get(FlagEnum.INITIAL_EXPLORATION)}" class="tab-container">
+            <span class="tab">Bonfire</span>
+            <span class="tab">Exploration</span>
+        </div>   -->
+        <Bonfire :active="activePanel"></Bonfire>
+        <Explore :active="activePanel"></Explore>
       </div>
       <div class="logs">
         <Logger></Logger>
@@ -23,15 +29,19 @@
 import Logger from './components/Logger.vue';
 import Resources from './components/Resources.vue';
 import Bonfire from './components/Bonfire.vue'
+import Explore from './components/Explore.vue'
 import { useUtils } from './stores/utilsStore';
 import { useGameFlags } from './stores/gameFlags';
-import { FlagEnum } from './enums/flagEnum';
+import { FlagEnum, Panel } from '@/enums';
 import { useLogs } from './stores/logStore';
+import { ref } from 'vue';
 
 const utils = useUtils();
 const gameFlags = useGameFlags();
 const logs = useLogs();
 utils.startClock();
+
+const activePanel = ref(Panel.BONFIRE);
 
 
 function startFire() {
@@ -39,6 +49,10 @@ function startFire() {
     setTimeout(function() {
         logs.pushLog("The fire crackles as it comes to life.")
     }, 2000)
+}
+
+function changePanel(panel: Panel) {
+    activePanel.value = panel;
 }
 
 
@@ -92,7 +106,7 @@ function startFire() {
     border-right: 5px ridge #ffc107;
   }
 
-  .bonfire {
+  .center {
     display: flex;
     flex-flow: column;
     width: 100vw;
@@ -110,10 +124,6 @@ function startFire() {
     background-color: black;
   }
 
-  .hidden {
-    opacity: 0;
-  }
-
   .fire-button {
     position:absolute;
     z-index: 2;
@@ -121,4 +131,11 @@ function startFire() {
     top: calc(50% - 37px);
     left: 45%;
 }
+
+/* .tab-container {
+    display:flex;
+    height: 40px;
+    margin-bottom:20px;
+    transition: opacity 5s ease-in;
+} */
 </style>

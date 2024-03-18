@@ -1,4 +1,4 @@
-import { FlagEnum } from "@/enums/flagEnum"
+import { FlagEnum } from "@/enums"
 import { defineStore } from "pinia"
 import { ref } from "vue"
 
