@@ -1,9 +1,6 @@
 <template>
 <div v-show="active === Panel.BONFIRE" class="bonfire-container" :class="{fire: gameFlags.flagList.get(FlagEnum.FIRE_STARTED)}">
-    <div :class="{hidden: !gameFlags.flagList.get(FlagEnum.INITIAL_EXPLORATION)}" class="tab-container">
-        <span class="tab">Bonfire</span>
-        <span class="tab">Exploration</span>
-    </div>  
+    <Tabs></Tabs>
     <div class="bonfire-image"></div>
     <button v-if="!gameFlags.flagList.get(FlagEnum.INITIAL_EXPLORATION)" @click="initialExplore()">Explore your immiedate surroundings.</button>
     
@@ -13,6 +10,8 @@
 import { FlagEnum, Panel } from '@/enums';
 import { useGameFlags } from '@/stores/gameFlags';
 import { useLogs } from '@/stores/logStore';
+import Tabs from '@/components/Tabs.vue';
+
 
 const props = defineProps({
     active: String

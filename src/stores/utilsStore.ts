@@ -1,9 +1,11 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
+import { Panel } from '@/enums'
 
 export const useUtils = defineStore('utils', () => {
     const gameClock = ref<Date>(new Date())
     let clockFunc = -1
+    const currentTab = ref<Panel>(Panel.BONFIRE);
 
     const getDisplayTime = computed(() => {
         return "" + gameClock.value.getHours() + ":" + gameClock.value.getMinutes();
@@ -24,5 +26,9 @@ export const useUtils = defineStore('utils', () => {
         gameClock.value = new Date();
     }
 
-  return { gameClock, getDisplayTime, startClock }
+    function setTab(panel: Panel) {
+        currentTab.value = panel
+    }
+
+  return { gameClock, currentTab, getDisplayTime, startClock, setTab }
 })

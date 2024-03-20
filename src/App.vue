@@ -5,19 +5,14 @@
         <span>???,??? AD</span>
         <span>SCAVENGER OS v0.01</span>
         <span>{{ utils.getDisplayTime }}</span>
-        <button @click="changePanel(Panel.EXPLORE)">Panel</button>
     </div>
     <div class="game-container" :class="{hidden: !gameFlags.flagList.get(FlagEnum.FIRE_STARTED)}">
       <div class="resources" >
         <Resources></Resources>
       </div>
       <div class="center">
-        <!-- <div :class="{hidden: !gameFlags.flagList.get(FlagEnum.INITIAL_EXPLORATION)}" class="tab-container">
-            <span class="tab">Bonfire</span>
-            <span class="tab">Exploration</span>
-        </div>   -->
-        <Bonfire :active="activePanel"></Bonfire>
-        <Explore :active="activePanel"></Explore>
+        <Bonfire :active="utils.currentTab"></Bonfire>
+        <Explore :active="utils.currentTab"></Explore>
       </div>
       <div class="logs">
         <Logger></Logger>
@@ -43,16 +38,11 @@ utils.startClock();
 
 const activePanel = ref(Panel.BONFIRE);
 
-
 function startFire() {
     gameFlags.setFlag(FlagEnum.FIRE_STARTED, true)
     setTimeout(function() {
         logs.pushLog("The fire crackles as it comes to life.")
     }, 2000)
-}
-
-function changePanel(panel: Panel) {
-    activePanel.value = panel;
 }
 
 
