@@ -15,10 +15,7 @@ export const useUtils = defineStore('utils', () => {
         //TODO: Maybe check if this is a memory leak?
         if(clockFunc === -1) {
             console.log('Test!')
-            clockFunc = setInterval(() => {
-                console.log('tick!')
-                refreshClock()
-            }, 30000)
+            clockFunc = setInterval(() => refreshClock(), 30000)
         }
     }
 

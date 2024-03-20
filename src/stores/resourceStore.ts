@@ -3,16 +3,19 @@ import { defineStore } from 'pinia'
 import { Resource } from '@/enums'
 
 export const useResources = defineStore('resources', () => {
-    const resources = ref<Map<Resource, number>>(new Map<Resource, number>([
-        [Resource.FABRIC_STRIP, 5],
-        [Resource.SCRAP_METAL, 5],
-    ]))
+    const resources = ref<Map<Resource, number>>(new Map<Resource, number>([]))
+    const resourceCap = ref(5);
 
     function gainResource(amnt:number, type: Resource){
-        const resource = resources.value.get(type);
-        resources.value.set(type, resource || 0 + amnt);
+        const resource = resources.value.get(type) || 0;
+        if(resource + amnt <= resourceCap.value) {
+            resources.value.set(type, (resource || 0) + amnt);
+        } else {
+            resources.value.set(type, resourceCap.value);
+        }
+       
     }
 
 
-    return { resources, gainResource }
+    return { resources, resourceCap, gainResource }
 })

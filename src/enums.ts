@@ -1,6 +1,7 @@
 export enum FlagEnum {
     FIRE_STARTED = 1, //Fire Started
-    INITIAL_EXPLORATION
+    INITIAL_EXPLORATION, //Explored your surroundings
+    MATERIALS_ACQUIRED //Got first materials.
 }
 
 export enum Panel {
@@ -13,4 +14,17 @@ export enum Resource {
     SCRAP_METAL,
     CHEMICALS,
     CIRCUITS
+}
+
+export function resourceDisplayName(type:Resource) {
+    switch(type) {
+        case Resource.CHEMICALS:
+            return "CHEMICALS";
+        case Resource.CIRCUITS:
+            return "CIRCUITS";
+        case Resource.FABRIC_STRIP:
+            return "F. STRIP";
+        case Resource.SCRAP_METAL:
+            return "S. METAL";
+    }
 }

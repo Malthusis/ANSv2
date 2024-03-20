@@ -2,39 +2,29 @@
 <div class="resources-box">
     <span>STABILITY 10/10</span>
     <span>ENERGY 40/40</span>
-    <span>STATUS:  <span style="color:green;">OK!</span><br><br> </span>
-    <span>RAW MATERIALS:</span>
-    <span v-for="(resource) in resources.resources.entries()">
+    <span>STATUS:  <span style="color:green;">OK!</span><br><br></span>
+    <template v-if="gameFlags.flagList.get(FlagEnum.MATERIALS_ACQUIRED)"><span>RAW MATERIALS:</span>
+    <span v-for="(resource) in resources.resources.entries()" :class="{full: resource[1] >= resources.resourceCap}">
         {{ displayResource(resource[0], resource[1]) }}
-    </span>
+    </span></template>
     <span></span>
-  
 </div> 
 </template>
 
 <script setup lang="ts">
-import { Resource } from '@/enums';
+import { FlagEnum, Resource, resourceDisplayName } from '@/enums';
+import { useGameFlags } from '@/stores/gameFlags';
 import { useResources } from '@/stores/resourceStore';
 
 
 const resources = useResources()
+const gameFlags = useGameFlags()
 
 function displayResource(type: Resource, number: number) {
     return resourceDisplayName(type) + ": " + number;
 }
 
-function resourceDisplayName(type:Resource) {
-    switch(type) {
-        case Resource.CHEMICALS:
-            return "CHEMICALS";
-        case Resource.CIRCUITS:
-            return "CIRCUITS";
-        case Resource.FABRIC_STRIP:
-            return "F. STRIP";
-        case Resource.SCRAP_METAL:
-            return "S. METAL";
-    }
-}
+
 
 </script>
 
@@ -50,6 +40,10 @@ function resourceDisplayName(type:Resource) {
   font-family: 'GelatinCaps';
   animation: textShadow 1.6s infinite;
   height: calc(100% - 50px); 
+}
+
+.full {
+    color: #ffc107;
 }
 
 </style>

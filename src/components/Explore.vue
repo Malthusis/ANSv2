@@ -32,12 +32,12 @@
 </div>
 </template>
 <script setup lang="ts">
-import { Panel } from '@/enums';
+import { FlagEnum, Panel, resourceDisplayName } from '@/enums';
 import type { Area } from '@/interfaces';
 import { useGameFlags } from '@/stores/gameFlags';
-import { useLogs } from '@/stores/logStore';
 import { ref } from 'vue';
 import Tabs from '@/components/Tabs.vue';
+import { useResources } from '@/stores/resourceStore';
 
 
 const props = defineProps({
@@ -51,7 +51,7 @@ const areaList = new Map<number, Area>([
 ])
 
 const gameFlags = useGameFlags();
-const logs = useLogs();
+const resources = useResources();
 const activeArea = ref<Area>(areaList.get(1) || {} as Area);
 const exploring = ref(false);
 let logFn = -1;
@@ -59,13 +59,11 @@ const logQueue = ref([] as string[])
 
 
 function pushLog(log: string) {
-    if (logQueue.value.length > 4) {
+    if (logQueue.value.length > 6) {
         logQueue.value.splice(0,1);
     }
     logQueue.value.push(log)
-    
 }
-
 
 function chooseArea(area: Area) {
     activeArea.value = area
@@ -74,8 +72,7 @@ function chooseArea(area: Area) {
 function startExploring() {
     exploring.value = true;
     logFn = setInterval(() => {
-        pushLog("Gained Item!")
-        //gainResource()
+        gainResource()
     },2000)
 }
 
@@ -83,6 +80,17 @@ function stopExploring() {
     exploring.value = false;
     clearInterval(logFn);
     logQueue.value = [];
+}
+
+function gainResource() {
+    //get resource in bounded resources.
+    console.log('tick!')
+    const resourceNum = Math.floor(Math.random() * 4) + 1;
+    resources.gainResource(1, resourceNum)
+    pushLog("Gained 1 " + resourceDisplayName(resourceNum))
+    if(!gameFlags.flagList.get(FlagEnum.MATERIALS_ACQUIRED)) {
+        gameFlags.setFlag(FlagEnum.MATERIALS_ACQUIRED, true)
+    }
 }
 
 </script>
