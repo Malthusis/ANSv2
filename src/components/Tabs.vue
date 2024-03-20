@@ -13,8 +13,27 @@ import { useUtils } from '@/stores/utilsStore';
 const gameFlags = useGameFlags();
 const utils = useUtils();
 </script>
-<style>
+<style scoped>
+.tab {
+    align-items: center;
+    color: white;
+    border: 2px solid white;
+    border-top: none;
+    padding: 4px 12px;
+    /* margin: 0 4px; */
+    text-decoration: none;
+    font-size: 22px;
+    cursor:pointer;
+}
+
+.tab:hover {
+    color: #ffc107;
+}
+
 .tab-container {
-    background-color: rgb(15, 15, 15);
+    display:flex;
+    height: 40px;
+    margin-bottom:20px;
+    transition: opacity 5s ease-in;
 }
 </style>

@@ -8,7 +8,7 @@ export const useLogs = defineStore('logs', () => {
         logQueue.value.push(log)
         if (logQueue.value.length > 15) {
             logQueue.value.shift();
-            }
+        }
     }
 
     return { logQueue, pushLog }

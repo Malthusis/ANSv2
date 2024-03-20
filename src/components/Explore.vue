@@ -1,13 +1,34 @@
 <template>
 <div v-show="active === Panel.EXPLORE" class="explore-container">
-    <Tabs></Tabs>
-    <div class="areas">
-        <div v-for="(area) of areaList">
-            <button v-if="area[1].unlocked" @click="chooseArea(area[1])" :class="{'unselected': activeArea.id !== area[0]}">{{ area[1].name }}</button>
+    <div v-show="!exploring" class="explore-container exploring">
+        <Tabs></Tabs>
+        <div class="areas">
+            <div v-for="(area) of areaList">
+                <button v-if="area[1].unlocked" @click="chooseArea(area[1])" :class="{'unselected': activeArea.id !== area[0]}">{{ area[1].name }}</button>
+            </div>
+        </div>
+        <div class="area-description"><span>{{ activeArea.description }} <br><br> {{ activeArea.danger }} </span></div>
+        <button @click="startExploring()">Explore.</button>
+    </div>
+    <div v-show="!!exploring" class="explore-container not-exploring">
+        <span class="explore-title">Exploring ...</span>
+
+        <div class="loading-outer">
+            <div class="loading-inner"></div>
+        </div>
+
+        <button @click="stopExploring()">Head back.</button>
+
+        <div class="console">
+            <TransitionGroup name="explore-log-lines" tag="div" class="explore-log">
+                <div v-for="(log, index) of logQueue" class="explore-log" :key="index">
+                    {{ log }}
+                </div>
+            </TransitionGroup>
+            
         </div>
     </div>
-    <div class="area-description"><span>{{ activeArea.description }} <br><br> {{ activeArea.danger }} </span></div>
-    <button>Explore.</button>
+    
 </div>
 </template>
 <script setup lang="ts">
@@ -32,14 +53,40 @@ const areaList = new Map<number, Area>([
 const gameFlags = useGameFlags();
 const logs = useLogs();
 const activeArea = ref<Area>(areaList.get(1) || {} as Area);
+const exploring = ref(false);
+let logFn = -1;
+const logQueue = ref([] as string[])
+
+
+function pushLog(log: string) {
+    if (logQueue.value.length > 4) {
+        logQueue.value.splice(0,1);
+    }
+    logQueue.value.push(log)
+    
+}
+
 
 function chooseArea(area: Area) {
     activeArea.value = area
 }
 
+function startExploring() {
+    exploring.value = true;
+    logFn = setInterval(() => {
+        pushLog("Gained Item!")
+        //gainResource()
+    },2000)
+}
+
+function stopExploring() {
+    exploring.value = false;
+    clearInterval(logFn);
+    logQueue.value = [];
+}
 
 </script>
-<style>
+<style scoped>
 .explore-container {
     height:100%;
     background-color: rgb(15, 15, 15);
@@ -47,6 +94,7 @@ function chooseArea(area: Area) {
     flex-direction: column;
     align-items: center;
     gap:40px;
+    width: 100%;
 }
 .areas {
     display:flex;
@@ -64,4 +112,80 @@ function chooseArea(area: Area) {
     margin-top: 20px;
     font-size: 18px;
 }
+
+.explore-title {
+    font-size: 32px;
+    color:white;
+    margin-top: 40px;
+}
+
+.loading-outer {
+    min-width:100px;
+    height: 32px;
+    border: 3px white solid;
+    border-radius: 8px;
+    width:25%;
+}
+
+.loading-inner {
+    animation: loading 2s linear infinite;
+    background-color:white;
+    min-width: 1px;
+    height: 29px;
+    border: 2px solid black;
+    border-radius: 6px;
+}
+
+@keyframes loading {
+	0% {
+		width: 0%;
+	}
+	50% {
+		width: 50%;
+	}
+	100% {
+		width: 100%;
+	}
+}
+
+.explore-log {
+  font-family: 'Squarebit2x';
+  font-size: 18px;
+  margin: 4px 0;
+  color: #878e93;
+  animation: textShadow 1.6s infinite;
+  pointer-events: none;
+}
+
+.explore-log-lines-move,
+.explore-log-lines-enter-active,
+.explore-log-lines-leave-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.explore-log-lines-enter-from,
+.explore-log-lines-leave-to {
+  opacity: 0;
+  transform: scaleY(0.10) translate(30px, 0px);
+}
+
+.explore-log-lines-leave-active {
+  position: absolute;
+}
+
+/* .explore-log-lines-move,
+.explore-log-lines-enter-active,
+.explore-log-lines-leave-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.explore-log-lines-enter-from,
+.explore-log-lines-leave-to {
+  opacity: 0;
+  transform: scaleY(0.01) translate(30px, 0);
+}
+
+.explore-log-lines-leave-active {
+  position: absolute;
+} */
 </style>

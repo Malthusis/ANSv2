@@ -13,6 +13,6 @@ export const useGameFlags = defineStore('gameFlags', () => {
     }
 
 	return {
-		flagList, setFlag, 
+		flagList, setFlag 
 	}
 })

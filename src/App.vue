@@ -48,7 +48,7 @@ function startFire() {
 
 </script>
 
-<style>
+<style scoped>
 .top-bar {
     font-family: 'Gelatin';
     min-height: 27px;

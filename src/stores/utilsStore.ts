@@ -8,7 +8,7 @@ export const useUtils = defineStore('utils', () => {
     const currentTab = ref<Panel>(Panel.BONFIRE);
 
     const getDisplayTime = computed(() => {
-        return "" + gameClock.value.getHours() + ":" + gameClock.value.getMinutes();
+        return "" + gameClock.value.getHours() + ":" + (gameClock.value.getMinutes() < 10 ? "0" + gameClock.value.getMinutes() :gameClock.value.getMinutes());
     }) 
 
     function startClock() {

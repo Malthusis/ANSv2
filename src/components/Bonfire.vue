@@ -31,7 +31,7 @@ function initialExplore() {
     }, 5000)
 }
 </script>
-<style>
+<style scoped>
 .bonfire-container {
     display: flex;
     flex-direction: column;
@@ -53,26 +53,5 @@ function initialExplore() {
     background-color: rgb(15, 15, 15);
 }
 
-.tab {
-    align-items: center;
-    color: white;
-    border: 2px solid white;
-    border-top: none;
-    padding: 4px 12px;
-    /* margin: 0 4px; */
-    text-decoration: none;
-    font-size: 22px;
-    cursor:pointer;
-}
 
-.tab:hover {
-    color: #ffc107;
-}
-
-.tab-container {
-    display:flex;
-    height: 40px;
-    margin-bottom:20px;
-    transition: opacity 5s ease-in;
-}
 </style>

@@ -10,7 +10,7 @@ import { useLogs } from '@/stores/logStore';
 
 const logs = useLogs()
 </script>
-<style>
+<style scoped>
 .log {
   font-family: 'Squarebit2x';
   font-size: 18px;
