@@ -13,6 +13,7 @@
       <div class="center">
         <Bonfire :active="utils.currentTab"></Bonfire>
         <Explore :active="utils.currentTab"></Explore>
+        <Craft :active="utils.currentTab"></Craft>
       </div>
       <div class="logs">
         <Logger></Logger>
@@ -25,6 +26,7 @@ import Logger from './components/Logger.vue';
 import Resources from './components/Resources.vue';
 import Bonfire from './components/Bonfire.vue'
 import Explore from './components/Explore.vue'
+import Craft from './components/Craft.vue'
 import { useUtils } from './stores/utilsStore';
 import { useGameFlags } from './stores/gameFlags';
 import { FlagEnum, Panel } from '@/enums';
@@ -36,8 +38,6 @@ const gameFlags = useGameFlags();
 const logs = useLogs();
 utils.startClock();
 
-const activePanel = ref(Panel.BONFIRE);
-
 function startFire() {
     gameFlags.setFlag(FlagEnum.FIRE_STARTED, true)
     setTimeout(function() {
@@ -48,7 +48,7 @@ function startFire() {
 
 </script>
 
-<style scoped>
+<style>
 .top-bar {
     font-family: 'Gelatin';
     min-height: 27px;
@@ -69,8 +69,6 @@ function startFire() {
     right: 0;
     bottom: 0;
   }
-
-
 
   .game-container {
     display: flex;
@@ -94,14 +92,16 @@ function startFire() {
 
   .resources {
     border-right: 5px ridge #ffc107;
+    flex-grow: 0;
   }
 
   .center {
     display: flex;
     flex-flow: column;
     width: 100vw;
-    min-width: 400px;
+    min-width: 700px;
     height: 100%;
+    flex-grow: 1;
   }
 
   .logs {
@@ -112,6 +112,7 @@ function startFire() {
     padding: 40px 10px 10px;
     border-left: 3px ridge #ffc107;
     background-color: black;
+    flex-grow: 0;
   }
 
   .fire-button {

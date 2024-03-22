@@ -6,7 +6,8 @@ export enum FlagEnum {
 
 export enum Panel {
     BONFIRE = "bonfire",
-    EXPLORE = "explore"
+    EXPLORE = "explore",
+    CRAFT = "craft"
 }
 
 export enum Resource {

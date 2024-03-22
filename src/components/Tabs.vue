@@ -2,6 +2,7 @@
 <div :class="{hidden: !gameFlags.flagList.get(FlagEnum.INITIAL_EXPLORATION)}" class="tab-container">
     <span class="tab" @click="utils.setTab(Panel.BONFIRE)">Bonfire</span>
     <span class="tab" @click="utils.setTab(Panel.EXPLORE)">Exploration</span>
+    <span v-if="gameFlags.flagList.get(FlagEnum.MATERIALS_ACQUIRED)" class="tab" @click="utils.setTab(Panel.CRAFT)">Craft</span>
 </div>  
 </template>
 <script setup lang="ts">
@@ -20,7 +21,6 @@ const utils = useUtils();
     border: 2px solid white;
     border-top: none;
     padding: 4px 12px;
-    /* margin: 0 4px; */
     text-decoration: none;
     font-size: 22px;
     cursor:pointer;
@@ -33,6 +33,7 @@ const utils = useUtils();
 .tab-container {
     display:flex;
     height: 40px;
+    min-height: 40px;
     margin-bottom:20px;
     transition: opacity 5s ease-in;
 }
