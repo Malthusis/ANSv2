@@ -14,10 +14,10 @@
 <script setup lang="ts">
 import { FlagEnum, Resource, resourceDisplayName } from '@/enums';
 import { useGameFlags } from '@/stores/gameFlags';
-import { useResources } from '@/stores/resourceStore';
+import { useStorage } from '@/stores/storage';
 
 
-const resources = useResources()
+const resources = useStorage()
 const gameFlags = useGameFlags()
 
 function displayResource(type: Resource, number: number) {

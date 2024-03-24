@@ -18,6 +18,17 @@ export enum Resource {
     CIRCUITS
 }
 
+export enum ItemType {
+    ITEM = 1,
+    MATERIAL,
+    CONSUMABLE,
+    WEAPON,
+    LIMB,
+    CORE,
+    OUTFIT,
+    CATALYST
+}
+
 export function resourceDisplayName(type:Resource) {
     switch(type) {
         case Resource.CHEMICALS:

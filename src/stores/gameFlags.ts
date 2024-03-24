@@ -3,7 +3,6 @@ import { defineStore } from "pinia"
 import { ref } from "vue"
 
 export const useGameFlags = defineStore('gameFlags', () => {
-  
 	// --- State ---
     const flagList = ref<Map<FlagEnum, boolean>>(new Map<FlagEnum, boolean>([]))
 

@@ -22,7 +22,7 @@
                 </div>    
             </div>
             <div class="inventory-box">
-                <div class="title-bar"><span>inventory</span><span>7/8</span></div>
+                <div class="title-bar"><span>storage</span><span>7/8</span></div>
                 <div class="inventory">
                     <span class="entry">rusted shiv</span>
                     <span class="entry">plastic bag</span>
@@ -79,7 +79,7 @@ const props = defineProps({
     padding: 0 4px;
     border-bottom: 3px white solid;
     span {
-        font-size: 22px;
+        font-size: 24px;
     }
 }
 

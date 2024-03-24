@@ -37,7 +37,7 @@ import type { Area } from '@/interfaces';
 import { useGameFlags } from '@/stores/gameFlags';
 import { ref } from 'vue';
 import Tabs from '@/components/Tabs.vue';
-import { useResources } from '@/stores/resourceStore';
+import { useStorage } from '@/stores/storage';
 
 
 const props = defineProps({
@@ -51,7 +51,7 @@ const areaList = new Map<number, Area>([
 ])
 
 const gameFlags = useGameFlags();
-const resources = useResources();
+const resources = useStorage();
 const activeArea = ref<Area>(areaList.get(1) || {} as Area);
 const exploring = ref(false);
 let logFn = -1;
