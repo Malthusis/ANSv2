@@ -14,6 +14,7 @@
         <Bonfire :active="utils.currentTab"></Bonfire>
         <Explore :active="utils.currentTab"></Explore>
         <Craft :active="utils.currentTab"></Craft>
+        <Projects :active="utils.currentTab"></Projects>
       </div>
       <div class="logs">
         <Logger></Logger>
@@ -27,6 +28,7 @@ import Resources from './components/Resources.vue';
 import Bonfire from './components/Bonfire.vue'
 import Explore from './components/Explore.vue'
 import Craft from './components/Craft.vue'
+import Projects from './components/Projects.vue'
 import { useUtils } from './stores/utilsStore';
 import { useGameFlags } from './stores/gameFlags';
 import { FlagEnum, Panel } from '@/enums';
@@ -54,7 +56,6 @@ function startFire() {
     min-height: 27px;
     background-color: black;
     border-bottom: 3px ridge white;
-    color: white;
     font-size: 16pt;
     display:flex;
     justify-content: space-between;

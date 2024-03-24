@@ -16,6 +16,5 @@ export const useResources = defineStore('resources', () => {
        
     }
 
-
     return { resources, resourceCap, gainResource }
 })

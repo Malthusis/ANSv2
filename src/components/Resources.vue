@@ -31,7 +31,6 @@ function displayResource(type: Resource, number: number) {
 <style scoped>
 .resources-box {
   font-size: 22px;
-  color: white;
   display: flex;
   flex-flow: column;
   width: 140px;

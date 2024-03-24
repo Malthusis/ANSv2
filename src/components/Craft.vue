@@ -7,7 +7,7 @@
             <div class="recipes">
                 <span class="recipe-line">rusted shiv - weapon - 5 ATK, +2 HIT</span>
                 <span class="recipe-line">plastic bag - storage - 5 STORAGE</span>
-                <span class="recipe-line">scavenger's bindings - outfit - 5 DEF +5 STAB, +20 HIT This is a description.</span>
+                <span class="recipe-line">scavenger's bindings - outfit - 5 DEF +5 STAB, +20 HIT</span>
             </div>
         </div>
         
@@ -16,15 +16,22 @@
                 <span class="item-title">Rusted Shiv</span>
                 <span class="item-flavor">A dirty, sharp spike of metal with strips of fabric wrapped around to form a handle.</span>
                 <span class="item-stats">Weapon: melee, 5 ATK.</span>
-                <span class="ingredients">Ingredients needed: <br>- 3 metal scraps<br>- 2 fabric strips</span>
+                <div class="ingredients-box">
+                    <span class="ingredients">Ingredients needed: <br>- 3 metal scraps<br>- 2 fabric strips</span>
+                    <button>Craft</button>
+                </div>    
             </div>
-            <div class="inventory">
-                <span class="entry">rusted shiv</span>
-                <span class="entry">plastic bag</span>
-                <span class="entry">s.bindings</span>
-                <span class="entry">explosive charge</span>
-                <span class="entry">ex.charge</span>
-                <span class="entry">ex.charge</span>
+            <div class="inventory-box">
+                <div class="title-bar"><span>inventory</span><span>7/8</span></div>
+                <div class="inventory">
+                    <span class="entry">rusted shiv</span>
+                    <span class="entry">plastic bag</span>
+                    <span class="entry">s.bindings</span>
+                    <span class="entry">explosive charge</span>
+                    <span class="entry">explosive charge</span>
+                    <span class="entry">explosive charge</span>
+                </div>
+
             </div>
         </div>
         
@@ -43,10 +50,7 @@ const props = defineProps({
 </script>
 
 <style scoped>
-.craft-title {
-    color: white;
-    font-size: 26px;
-}
+
 
 .craft-container {
     height:100%;
@@ -69,6 +73,16 @@ const props = defineProps({
     flex-direction: column;   
 }
 
+.title-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4px;
+    border-bottom: 3px white solid;
+    span {
+        font-size: 22px;
+    }
+}
+
 .item-display {
     /* padding: 8px 10px; */
     min-width: 200px;
@@ -81,7 +95,6 @@ const props = defineProps({
     font-family: 'Squarebit2x';
     span {
         padding: 6px 10px;
-        color:white;
     }
     .item-title {
         font-size: 24px;
@@ -95,15 +108,27 @@ const props = defineProps({
         font-size: 18px;
         flex-grow: 1;
     }
-    .ingredients {
+    .ingredients-box {
         border-top: 2px solid white;
-        font-size: 18px;
+        display:flex;
+        align-items: center;
+        justify-content:space-between;
+        .ingredients {
+            
+            font-size: 18px;
+        }
     }
+    
+}
+.inventory-box {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid white;
+    background-color: #112806;
 }
 
 .inventory {
-    border: 2px solid white;
-    background-color: #112806;
     min-height: 100px;
     flex-grow: 1;
     display: flex;
@@ -112,7 +137,6 @@ const props = defineProps({
     padding: 4px 8px;
     .entry {
         width: 160px;
-        color: white;
         font-size: 24px;
     }
 }
@@ -130,7 +154,6 @@ const props = defineProps({
     flex-grow: 1;
 
     .recipe-line {
-        color: white;
         font-size:22px;
         border-bottom: 2px solid rgb(170, 170, 170);
         padding: 0 4px;
@@ -140,5 +163,8 @@ const props = defineProps({
 .recipe-box {
     display:flex;
     flex-direction:column;
+    .craft-title {
+        font-size: 26px;
+    }
 }
 </style>

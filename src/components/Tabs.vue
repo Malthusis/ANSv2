@@ -3,6 +3,7 @@
     <span class="tab" @click="utils.setTab(Panel.BONFIRE)">Bonfire</span>
     <span class="tab" @click="utils.setTab(Panel.EXPLORE)">Exploration</span>
     <span v-if="gameFlags.flagList.get(FlagEnum.MATERIALS_ACQUIRED)" class="tab" @click="utils.setTab(Panel.CRAFT)">Craft</span>
+    <span v-if="gameFlags.flagList.get(FlagEnum.MATERIALS_ACQUIRED)" class="tab" @click="utils.setTab(Panel.PROJECTS)">Projects</span>
 </div>  
 </template>
 <script setup lang="ts">
@@ -17,7 +18,6 @@ const utils = useUtils();
 <style scoped>
 .tab {
     align-items: center;
-    color: white;
     border: 2px solid white;
     border-top: none;
     padding: 4px 12px;
