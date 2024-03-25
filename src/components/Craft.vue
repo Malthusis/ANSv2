@@ -5,6 +5,7 @@
         <div class="recipe-box">
             <span class="craft-title" >Recipes</span>
             <div class="recipes">
+                <!-- <span v-for="(recipe) of itemdb" class="recipe-line">rusted shiv - weapon - 5 ATK, +2 HIT</span> -->
                 <span class="recipe-line">rusted shiv - weapon - 5 ATK, +2 HIT</span>
                 <span class="recipe-line">plastic bag - storage - 5 STORAGE</span>
                 <span class="recipe-line">scavenger's bindings - outfit - 5 DEF +5 STAB, +20 HIT</span>
@@ -18,21 +19,11 @@
                 <span class="item-stats">Weapon: melee, 5 ATK.</span>
                 <div class="ingredients-box">
                     <span class="ingredients">Ingredients needed: <br>- 3 metal scraps<br>- 2 fabric strips</span>
-                    <button>Craft</button>
+                    <button @click="setupStorage()">Craft</button>
+                    <button @click="clearStorage()">Clear</button>
                 </div>    
             </div>
-            <div class="inventory-box">
-                <div class="title-bar"><span>storage</span><span>7/8</span></div>
-                <div class="inventory">
-                    <span class="entry">rusted shiv</span>
-                    <span class="entry">plastic bag</span>
-                    <span class="entry">s.bindings</span>
-                    <span class="entry">explosive charge</span>
-                    <span class="entry">explosive charge</span>
-                    <span class="entry">explosive charge</span>
-                </div>
-
-            </div>
+            <Storage></Storage>
         </div>
         
     </div>
@@ -43,10 +34,28 @@
 <script setup lang="ts">
 import Tabs from '@/components/Tabs.vue';
 import { Panel } from '@/enums';
+import { useStorage } from '@/stores/storage';
+import Storage from './Storage.vue'
 
 const props = defineProps({
     active: String
 })
+
+const storage = useStorage()
+// const itemdb = useItemDB();
+
+
+function setupStorage() {
+    storage.gainStorageItem(1)
+    // storage.gainStorageItem(2)
+    // storage.gainStorageItem(3)
+    // storage.gainStorageItem(4)
+    // storage.gainStorageItem(5)
+}
+
+function clearStorage() {
+    storage.clearStorage()
+}
 </script>
 
 <style scoped>
@@ -70,18 +79,11 @@ const props = defineProps({
 
 .items-box {
     display:flex;
-    flex-direction: column;   
+    flex-direction: column;
+    width: 100%;
 }
 
-.title-bar {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 4px;
-    border-bottom: 3px white solid;
-    span {
-        font-size: 24px;
-    }
-}
+
 
 .item-display {
     /* padding: 8px 10px; */
@@ -113,32 +115,10 @@ const props = defineProps({
         display:flex;
         align-items: center;
         justify-content:space-between;
-        .ingredients {
-            
+        .ingredients { 
             font-size: 18px;
         }
-    }
-    
-}
-.inventory-box {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    border: 2px solid white;
-    background-color: #112806;
-}
-
-.inventory {
-    min-height: 100px;
-    flex-grow: 1;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    padding: 4px 8px;
-    .entry {
-        width: 160px;
-        font-size: 24px;
-    }
+    }  
 }
 
 .recipes {

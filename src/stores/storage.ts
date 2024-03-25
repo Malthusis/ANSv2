@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { ItemType, Resource } from '@/enums'
 import type { Item } from '@/interfaces'
+import { useItemDatabase } from './itemDatabase'
 
 export const useStorage = defineStore('storage', () => {
     //-- STATE --
@@ -22,27 +23,28 @@ export const useStorage = defineStore('storage', () => {
     }
 
     function gainStorageItem(itemId: number): boolean {
-        const dummyItem = {
-            id: 99,
-            type: ItemType.ITEM,
-            name: "dummy item",
-            flavor: "Hello World!"
-        }
+        const itemDB = useItemDatabase()
 
-        if (storage.value.length < storageCap.value) {
-            storage.value.push(dummyItem)
+        const item = itemDB.itemList.get(itemId)
+
+        if (!!item && storage.value.length < storageCap.value) {
+            storage.value.push(item)
             return true;
-        } else if (inventory.value.length < inventoryCap.value) {
-            inventory.value.push(dummyItem)
+        } else if (!!item && inventory.value.length < inventoryCap.value) {
+            inventory.value.push(item)
             return true;
         }
         return false;
+    }
+
+    function clearStorage() {
+        storage.value = []
     }
 
     return { 
         //State
         resources, resourceCap, inventory, inventoryCap, storage, storageCap,
         //Functions
-        gainResource, gainStorageItem 
+        gainResource, gainStorageItem, clearStorage
     }
 })

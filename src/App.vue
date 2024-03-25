@@ -22,6 +22,7 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import Logger from './components/Logger.vue';
 import Resources from './components/Resources.vue';
