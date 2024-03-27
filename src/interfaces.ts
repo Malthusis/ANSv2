@@ -14,3 +14,19 @@ export interface Item {
     name: string;
     flavor: string;
 }
+
+export interface Recipe {
+    recipeId: number;
+    unlocked?: boolean;
+    name: string;
+    itemId: number;
+    description: string;
+    quantityMade?: number;
+    ingredients: Ingredient[];
+}
+
+export interface Ingredient {
+    itemId: number;
+    isBasic: boolean;
+    quantity?: number;
+}

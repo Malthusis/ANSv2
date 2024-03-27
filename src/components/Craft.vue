@@ -5,10 +5,9 @@
         <div class="recipe-box">
             <span class="craft-title" >Recipes</span>
             <div class="recipes">
-                <!-- <span v-for="(recipe) of itemdb" class="recipe-line">rusted shiv - weapon - 5 ATK, +2 HIT</span> -->
-                <span class="recipe-line">rusted shiv - weapon - 5 ATK, +2 HIT</span>
-                <span class="recipe-line">plastic bag - storage - 5 STORAGE</span>
-                <span class="recipe-line">scavenger's bindings - outfit - 5 DEF +5 STAB, +20 HIT</span>
+                <span v-for="(recipe) of itemdb.getAvailableRecipes" class="recipe-line">
+                    {{ recipe.name + " - " + recipe.description }}
+                </span>
             </div>
         </div>
         
@@ -36,13 +35,14 @@ import Tabs from '@/components/Tabs.vue';
 import { Panel } from '@/enums';
 import { useStorage } from '@/stores/storage';
 import Storage from './Storage.vue'
+import { useItemDatabase } from '@/stores/itemDatabase';
 
 const props = defineProps({
     active: String
 })
 
 const storage = useStorage()
-// const itemdb = useItemDB();
+const itemdb = useItemDatabase();
 
 
 function setupStorage() {

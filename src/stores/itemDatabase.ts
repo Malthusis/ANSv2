@@ -1,7 +1,7 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { ItemType } from '@/enums'
-import type { Item } from '@/interfaces'
+import { ItemType, Resource } from '@/enums'
+import type { Item, Recipe } from '@/interfaces'
 
 export const useItemDatabase = defineStore('itemDatabase', () => {
     const itemList = new Map<number, Item>([
@@ -37,9 +37,31 @@ export const useItemDatabase = defineStore('itemDatabase', () => {
         }],
     ])
 
+    const recipeList = ref<Map<number, Recipe>>(new Map<number, Recipe>([
+        [1, {
+            recipeId: 1,
+            itemId: 1,
+            name: "rusted shiv",
+            description: "weapon - 5 ATK",
+            unlocked: true,
+            ingredients:[{itemId: Resource.SCRAP_METAL, isBasic: true, quantity: 3}, {itemId: Resource.FABRIC_STRIP, isBasic: true, quantity: 2}]
+        }],
+        [2, {
+            recipeId: 2,
+            itemId: 2,
+            name: "scav's bindings",
+            description: "outfit - 5 DEF, +5 STAB",
+            unlocked: true,
+            ingredients:[{itemId: Resource.FABRIC_STRIP, isBasic: true, quantity: 5}]
+        }],
+    ]))
+
+    const getAvailableRecipes = computed(() => Array.from(recipeList.value.values()).filter( recipe => recipe?.unlocked))
+
+
     return { 
         //State
-        itemList
+        itemList, recipeList, getAvailableRecipes
     }
 })
 
