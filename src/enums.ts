@@ -15,7 +15,8 @@ export enum Resource {
     FABRIC_STRIP = 1,
     SCRAP_METAL,
     CHEMICALS,
-    CIRCUITS
+    CIRCUITS,
+    SMALL_BONE
 }
 
 export enum ItemType {
@@ -39,5 +40,7 @@ export function resourceDisplayName(type:Resource) {
             return "F. STRIP";
         case Resource.SCRAP_METAL:
             return "S. METAL";
+        case Resource.SMALL_BONE:
+            return "SM. BONE";
     }
 }

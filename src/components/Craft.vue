@@ -5,7 +5,7 @@
         <div class="recipe-box">
             <span class="craft-title" >Recipes</span>
             <div class="recipes">
-                <span v-for="(recipe) of itemdb.getAvailableRecipes" class="recipe-line">
+                <span v-for="(recipe) of itemdb.getAvailableRecipes" class="recipe-line" @click="setActiveRecipe(recipe.recipeId)" :class="{selected: activeRecipe?.recipeId === recipe.recipeId}">
                     {{ recipe.name + " - " + recipe.description }}
                 </span>
             </div>
@@ -13,14 +13,19 @@
         
         <div class="items-box">
             <div class="item-display">
-                <span class="item-title">Rusted Shiv</span>
-                <span class="item-flavor">A dirty, sharp spike of metal with strips of fabric wrapped around to form a handle.</span>
-                <span class="item-stats">Weapon: melee, 5 ATK.</span>
-                <div class="ingredients-box">
-                    <span class="ingredients">Ingredients needed: <br>- 3 metal scraps<br>- 2 fabric strips</span>
-                    <button @click="setupStorage()">Craft</button>
-                    <button @click="clearStorage()">Clear</button>
-                </div>    
+                <template v-if="!!activeRecipe && !!activeRecipeItem">
+                    <span class="item-title">{{ activeRecipeItem.name }}</span>
+                    <span class="item-flavor">{{ activeRecipeItem.flavor }}</span>
+                    <span class="item-stats">{{ activeRecipeItem.effectDescription }}</span>
+                    <div class="ingredients-box">
+                        <div class="ingredients">
+                            <span>Ingredients needed:</span>
+                            <span v-for="(ingredient) of activeRecipe.ingredients">{{ "- " + dispIngredient(ingredient) }}</span>
+                        </div>
+                        <button @click="setupStorage()">Craft</button>
+                        <button @click="clearStorage()">Clear</button>
+                    </div>
+                </template>  
             </div>
             <Storage></Storage>
         </div>
@@ -36,13 +41,23 @@ import { Panel } from '@/enums';
 import { useStorage } from '@/stores/storage';
 import Storage from './Storage.vue'
 import { useItemDatabase } from '@/stores/itemDatabase';
+import { ref } from 'vue';
+import { displayIngredient, type Item, type Recipe, type Ingredient } from '@/interfaces';
 
 const props = defineProps({
     active: String
 })
 
 const storage = useStorage()
-const itemdb = useItemDatabase();
+const itemdb = useItemDatabase()
+const activeRecipe = ref<Recipe>()
+const activeRecipeItem = ref<Item>()
+
+function setActiveRecipe(recipeId: number) {
+    const recipe = itemdb.recipeList.get(recipeId);
+    activeRecipe.value = recipe
+    activeRecipeItem.value = itemdb.itemList.get(recipe?.itemId || 0)
+}
 
 
 function setupStorage() {
@@ -55,6 +70,15 @@ function setupStorage() {
 
 function clearStorage() {
     storage.clearStorage()
+}
+
+function dispIngredient(ingredient: Ingredient): string {
+    // debugger;
+    if(ingredient.isBasic){
+        return displayIngredient(ingredient)
+    } else {
+        return displayIngredient(ingredient, itemdb.itemList.get(ingredient.itemId))
+    }  
 }
 </script>
 
@@ -116,7 +140,13 @@ function clearStorage() {
         align-items: center;
         justify-content:space-between;
         .ingredients { 
-            font-size: 18px;
+            display:flex;
+            flex-direction: column;
+            margin: 4px 0;
+            span {
+                font-size: 18px;
+                padding: 2px 10px;
+            }  
         }
     }  
 }
@@ -137,6 +167,15 @@ function clearStorage() {
         font-size:22px;
         border-bottom: 2px solid rgb(170, 170, 170);
         padding: 0 4px;
+        cursor: pointer;
+    }
+
+    .recipe-line:hover{
+        color: #ffc107;
+    }
+
+    .selected {
+        color: #ffc107;
     }
 }
 
