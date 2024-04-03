@@ -25,7 +25,7 @@
     
     </template>
     
-    <script setup lang="ts">
+<script setup lang="ts">
     import Tabs from '@/components/Tabs.vue';
     import { Panel } from '@/enums';
     

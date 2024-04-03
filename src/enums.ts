@@ -1,14 +1,16 @@
 export enum FlagEnum {
     FIRE_STARTED = 1, //Fire Started
     INITIAL_EXPLORATION, //Explored your surroundings
-    MATERIALS_ACQUIRED //Got first materials.
+    MATERIALS_ACQUIRED, //Got first materials.
+    CRAFTED_ITEMS, //Crafted first items.
 }
 
 export enum Panel {
     BONFIRE = "bonfire",
     EXPLORE = "explore",
     CRAFT = "craft",
-    PROJECTS = "projects"
+    PROJECTS = "projects",
+    SELF = "self"
 }
 
 export enum Resource {

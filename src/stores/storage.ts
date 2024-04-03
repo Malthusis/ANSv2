@@ -11,7 +11,7 @@ export const useStorage = defineStore('storage', () => {
     const inventory = ref<Item[]>([])
     const inventoryCap = ref<number>(4)
     const storage = ref<Item[]>([])
-    const storageCap = ref<number>(10)
+    const storageCap = ref<number>(5)
 
     function gainResource(amnt:number, type: Resource){
         const resource = resources.value.get(type) || 0;
@@ -37,6 +37,16 @@ export const useStorage = defineStore('storage', () => {
         return false;
     }
 
+    function spendItem(itemId: number): boolean {
+        const idx = storage.value.findIndex((item) => item.id === itemId)
+        if(idx !== -1){
+            storage.value.splice(idx, 1);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function clearStorage() {
         storage.value = []
     }
@@ -45,6 +55,6 @@ export const useStorage = defineStore('storage', () => {
         //State
         resources, resourceCap, inventory, inventoryCap, storage, storageCap,
         //Functions
-        gainResource, gainStorageItem, clearStorage
+        gainResource, gainStorageItem, clearStorage, spendItem
     }
 })

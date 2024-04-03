@@ -15,6 +15,7 @@
         <Explore :active="utils.currentTab"></Explore>
         <Craft :active="utils.currentTab"></Craft>
         <Projects :active="utils.currentTab"></Projects>
+        <Self :active="utils.currentTab"></Self>
       </div>
       <div class="logs">
         <Logger></Logger>
@@ -30,6 +31,7 @@ import Bonfire from './components/Bonfire.vue'
 import Explore from './components/Explore.vue'
 import Craft from './components/Craft.vue'
 import Projects from './components/Projects.vue'
+import Self from './components/Self.vue'
 import { useUtils } from './stores/utilsStore';
 import { useGameFlags } from './stores/gameFlags';
 import { FlagEnum, Panel } from '@/enums';

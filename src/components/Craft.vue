@@ -22,7 +22,7 @@
                             <span>Ingredients needed:</span>
                             <span v-for="(ingredient) of activeRecipe.ingredients">{{ "- " + dispIngredient(ingredient) }}</span>
                         </div>
-                        <button @click="setupStorage()">Craft</button>
+                        <button @click="craftItem()">Craft</button>
                         <button @click="clearStorage()">Clear</button>
                     </div>
                 </template>  
@@ -37,12 +37,14 @@
 
 <script setup lang="ts">
 import Tabs from '@/components/Tabs.vue';
-import { Panel } from '@/enums';
+import { FlagEnum, Panel } from '@/enums';
 import { useStorage } from '@/stores/storage';
 import Storage from './Storage.vue'
 import { useItemDatabase } from '@/stores/itemDatabase';
 import { ref } from 'vue';
 import { displayIngredient, type Item, type Recipe, type Ingredient } from '@/interfaces';
+import { useLogs } from '@/stores/logStore';
+import { useGameFlags } from '@/stores/gameFlags';
 
 const props = defineProps({
     active: String
@@ -50,8 +52,10 @@ const props = defineProps({
 
 const storage = useStorage()
 const itemdb = useItemDatabase()
+const gameFlags = useGameFlags()
 const activeRecipe = ref<Recipe>()
 const activeRecipeItem = ref<Item>()
+const logs = useLogs()
 
 function setActiveRecipe(recipeId: number) {
     const recipe = itemdb.recipeList.get(recipeId);
@@ -59,14 +63,71 @@ function setActiveRecipe(recipeId: number) {
     activeRecipeItem.value = itemdb.itemList.get(recipe?.itemId || 0)
 }
 
-
-function setupStorage() {
-    storage.gainStorageItem(1)
-    // storage.gainStorageItem(2)
-    // storage.gainStorageItem(3)
-    // storage.gainStorageItem(4)
-    // storage.gainStorageItem(5)
+function craftItem() {
+    const result = costCheck();
+    console.log(result);
+    if(!result) {
+        logs.pushLog("Unable to craft, not enough ingredients.")
+    } else {
+        genItem()
+        logs.pushLog("Crafted.")
+        if(!gameFlags.flagList.get(FlagEnum.CRAFTED_ITEMS)) {
+            gameFlags.setFlag(FlagEnum.CRAFTED_ITEMS, true)
+        }
+    }
 }
+
+function costCheck(): boolean {
+    if(activeRecipe.value?.ingredients) {
+        for(let ingredient of activeRecipe.value?.ingredients){
+            if(ingredient.isBasic) {
+                //verify if you have the basic resources
+                // const x = storage.resources.get(ingredient.itemId) || 0;
+                // const y = ingredient.quantity || 1
+                if((storage.resources.get(ingredient.itemId) || 0) < (ingredient.quantity || 1)){
+                    return false;
+                }
+            } else {
+                //complex ingredient
+                if(!storage.storage.find((item) => item.id === ingredient.itemId)){
+                    return false;
+                }
+            }
+        }
+
+        //Everything's in order.
+        return true;
+    }
+
+    return false;
+}
+
+function genItem() {
+    if(activeRecipe.value?.ingredients) {
+        for(let ingredient of activeRecipe.value?.ingredients){
+            if(ingredient.isBasic) {
+                const resource = storage.resources.get(ingredient.itemId)
+                storage.resources.set(ingredient.itemId, ((resource || 0) - (ingredient.quantity || 1)))
+            } else {
+                //complex ingredient
+                //TODO: Check if this is actually taken later
+                storage.spendItem(ingredient.itemId)
+            }
+        }
+
+        storage.gainStorageItem(activeRecipeItem.value?.id || 1)
+    }
+
+}
+
+
+// function setupStorage() {
+//     storage.gainStorageItem(1)
+//     // storage.gainStorageItem(2)
+//     // storage.gainStorageItem(3)
+//     // storage.gainStorageItem(4)
+//     // storage.gainStorageItem(5)
+// }
 
 function clearStorage() {
     storage.clearStorage()

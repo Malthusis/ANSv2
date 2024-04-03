@@ -4,6 +4,7 @@
     <span class="tab" @click="utils.setTab(Panel.EXPLORE)">Exploration</span>
     <span v-if="gameFlags.flagList.get(FlagEnum.MATERIALS_ACQUIRED)" class="tab" @click="utils.setTab(Panel.CRAFT)">Craft</span>
     <span v-if="gameFlags.flagList.get(FlagEnum.MATERIALS_ACQUIRED)" class="tab" @click="utils.setTab(Panel.PROJECTS)">Projects</span>
+    <span v-if="gameFlags.flagList.get(FlagEnum.CRAFTED_ITEMS)" class="tab" @click="utils.setTab(Panel.SELF)">Self</span>
 </div>  
 </template>
 <script setup lang="ts">
