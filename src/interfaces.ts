@@ -54,3 +54,8 @@ export function displayIngredient(ingredient:Ingredient, item?:Item): string {
     }
     return ""
 }
+
+export interface ExploreLog {
+    id: number;
+    log: string;
+}

@@ -21,8 +21,8 @@
 
         <div class="console">
             <TransitionGroup name="explore-log-lines" tag="div" class="explore-log">
-                <div v-for="(log, index) of logQueue" class="explore-log" :key="index">
-                    {{ log }}
+                <div v-for="log of logQueue" class="explore-log" :key="log.id">
+                    {{ log.log }}
                 </div>
             </TransitionGroup>
             
@@ -33,7 +33,7 @@
 </template>
 <script setup lang="ts">
 import { FlagEnum, Panel, resourceDisplayName } from '@/enums';
-import type { Area } from '@/interfaces';
+import type { Area, ExploreLog } from '@/interfaces';
 import { useGameFlags } from '@/stores/gameFlags';
 import { ref } from 'vue';
 import Tabs from '@/components/Tabs.vue';
@@ -55,14 +55,16 @@ const resources = useStorage();
 const activeArea = ref<Area>(areaList.get(1) || {} as Area);
 const exploring = ref(false);
 let logFn = -1;
-const logQueue = ref([] as string[])
+let logId = 0;
+const logQueue = ref([] as ExploreLog[])
 
 
 function pushLog(log: string) {
     if (logQueue.value.length > 6) {
         logQueue.value.splice(0,1);
     }
-    logQueue.value.push(log)
+    logQueue.value.push({id: logId, log: log})
+    logId = logId + 1;
 }
 
 function chooseArea(area: Area) {
@@ -80,6 +82,7 @@ function stopExploring() {
     exploring.value = false;
     clearInterval(logFn);
     logQueue.value = [];
+    logId = 0;
 }
 
 function gainResource() {
@@ -166,34 +169,14 @@ function gainResource() {
 }
 
 .explore-log-lines-move,
-.explore-log-lines-enter-active,
-.explore-log-lines-leave-active {
+.explore-log-lines-enter-active {
   transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
-.explore-log-lines-enter-from,
-.explore-log-lines-leave-to {
+.explore-log-lines-enter-from {
   opacity: 0;
   transform: scaleY(0.10) translate(30px, 0px);
 }
 
-.explore-log-lines-leave-active {
-  position: absolute;
-}
 
-/* .explore-log-lines-move,
-.explore-log-lines-enter-active,
-.explore-log-lines-leave-active {
-  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
-}
-
-.explore-log-lines-enter-from,
-.explore-log-lines-leave-to {
-  opacity: 0;
-  transform: scaleY(0.01) translate(30px, 0);
-}
-
-.explore-log-lines-leave-active {
-  position: absolute;
-} */
 </style>
