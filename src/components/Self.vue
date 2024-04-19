@@ -6,11 +6,11 @@
             <span>Status printout...</span>
             <span>Current Status: OK!</span>
             <span>--- Equipment ---</span>
-            <span class="equip-line">Outfit: scav's bindings</span>
-            <span>Limb: crude shiv</span>
-            <span>Limb: </span>
-            <span>Core:</span>
-            <span>Catalyst:</span>
+            <span class="equip-line" @click="">Outfit: scav's bindings</span>
+            <span class="equip-line" @click="">Limb: crude shiv</span>
+            <span class="equip-line" @click="">Limb: </span>
+            <span class="equip-line" @click="">Core:</span>
+            <span class="equip-line" @click="">Catalyst:</span>
             <span>--- Stats ---</span>
             <div class="stats">
                 <span class="stat">STABILITY: 10/10</span>
@@ -20,22 +20,60 @@
             </div>
         </div>
         <div class="items">
-            <Bag></Bag>
-            <Storage></Storage>
+            <Bag @chosen-item="selectItem"></Bag>
+            <Storage @chosen-item="selectItem"></Storage>
         </div>
+    </div>
+    <div v-if="selectedType" class="control-box">
+        <span class="choice-text">{{ getChoiceText }}</span>
+        <div v-if="selectedType === StorageType.BAG" class="choice-box">
+            <button>To Storage</button>
+            <button>Equip</button>
+            <button>Trash</button>
+        </div>
+        <div v-else-if="selectedType === StorageType.STORAGE" class="choice-box">
+            <button>To Bag</button>
+            <button>Equip</button>
+            <button>Trash</button>
+        </div>  
     </div>
 </div>
 </template>
 <script setup lang="ts">
-import { Panel } from '@/enums';
+import { Panel, StorageType } from '@/enums';
 import Tabs from '@/components/Tabs.vue';
 import Storage from './Storage.vue'
 import Bag from './Bag.vue'
+import { computed, ref } from 'vue'
+import { useStorage } from '@/stores/storage';
 const props = defineProps({
     active: String
 })
+
+const storage = useStorage();
+const selected = ref(-1)
+const selectedType = ref<StorageType>(StorageType.UNDEFINED)
+
+//TODO: Make this work for equips too.
+const getChoiceText = computed(() => {
+    switch(selectedType.value) {
+        case StorageType.STORAGE:
+            return storage.storage[selected.value].name;
+        case StorageType.BAG:
+            return storage.inventory[selected.value].name;
+    }
+    return "N/A"
+})
+
+function selectItem(itemNum: number, type: StorageType) {
+    console.log("selected Item " + itemNum);
+    selected.value = itemNum;
+    selectedType.value = type;
+}
+
 </script>
 <style scoped>
+
 .self-container {
     height:100%;
     background-color: rgb(15, 15, 15);
@@ -43,10 +81,10 @@ const props = defineProps({
     flex-direction: column;
     align-items: center;
 }
+
 .self-box {
     display:flex;
     width: 100%;
-    height: 100%;
     align-items: flex-start;
     .status {
         background-color:rgb(34, 3, 3);
@@ -57,24 +95,20 @@ const props = defineProps({
         display: flex;
         border: 3px solid white;
         font-size: 24px;
+        height: 100%;
 
         .stats {
             display:flex;
-            /* flex-basis: 30%; */
             justify-content: space-evenly;
-            /* gap: 20px; */
             width: 100%;
             flex-wrap: wrap;
-
-            /* .stat {
-                flex-grow: 1;
-            } */
         }
     }
     .items {
         flex-grow: 1;
         height: 100%;
-        background-color:rgb(60, 90, 15);
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -88,14 +122,24 @@ const props = defineProps({
     animation: hoverSelect 2s linear infinite;
 }
 
-@keyframes hoverSelect {
-    0%, 100% {
-        background-color: rgba(255, 255, 255, 0.2)
+.control-box {
+    display:flex;
+    flex-direction: column;
+    height: 100px;
+    width: 50%;
+    background: rgb(37, 2, 22);
+    border: 3px solid white;
+    align-items: center;
+    justify-content: space-evenly;
+
+    .choice-box {
+        display:flex;
     }
 
-    50% {
-        background-color: rgba(255, 255, 255, 0.6)
+    .choice-text {
+        font-size: 22px;
     }
 }
+
 
 </style>

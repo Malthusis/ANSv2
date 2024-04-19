@@ -2,13 +2,16 @@
 <div class="bag-box">
     <div class="title-bar"><span>bag</span><span>{{ storage.inventory.length + "/" + storage.inventoryCap }}</span></div>
     <div class="bag">
-        <span v-for="(item) of storage.inventory" class="entry">{{ item.name }}</span>
+        <span @click="$emit('chosen-item', idx, StorageType.BAG)" v-for="(item, idx) of storage.inventory" class="entry">{{ item.name }}</span>
     </div>
 </div>
 </template>
 
 <script setup lang="ts">
 import { useStorage } from '@/stores/storage';
+import { StorageType } from '@/enums';
+
+const emits = defineEmits(['chosen-item'])
 
 const storage = useStorage()
 </script>
@@ -43,5 +46,11 @@ const storage = useStorage()
     span {
         font-size: 24px;
     }
+}
+
+.entry:hover{
+    color:#ffc107;
+    animation: hoverSelect 2s linear infinite;
+    cursor: pointer;
 }
 </style>

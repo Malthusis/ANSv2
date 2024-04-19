@@ -17,6 +17,8 @@ const props = defineProps({
     active: String
 })
 
+defineEmits(['chosen-item'])
+
 const gameFlags = useGameFlags();
 const logs = useLogs();
 
@@ -41,7 +43,7 @@ function initialExplore() {
 }
 
 .bonfire-image {
-    background-color: rgb(25,25,25);
+    background-color: rgba(25,25,25, 255);
     width:80%;
     max-width: 700px;
     height: 300px;

@@ -46,3 +46,10 @@ export function resourceDisplayName(type:Resource) {
             return "SM. BONE";
     }
 }
+
+export enum StorageType {
+    UNDEFINED = 0,
+    STORAGE,
+    BAG,
+    EQUIPMENT
+}

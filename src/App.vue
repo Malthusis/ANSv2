@@ -36,7 +36,6 @@ import { useUtils } from './stores/utilsStore';
 import { useGameFlags } from './stores/gameFlags';
 import { FlagEnum, Panel } from '@/enums';
 import { useLogs } from './stores/logStore';
-import { ref } from 'vue';
 
 const utils = useUtils();
 const gameFlags = useGameFlags();
