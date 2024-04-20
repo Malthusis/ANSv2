@@ -88,7 +88,7 @@ function stopExploring() {
 function gainResource() {
     //get resource in bounded resources.
     console.log('tick!')
-    const resourceNum = Math.floor(Math.random() * 4) + 1;
+    const resourceNum = Math.floor(Math.random() * 2) + 1;
     resources.gainResource(1, resourceNum)
     pushLog("Gained 1 " + resourceDisplayName(resourceNum))
     if(!gameFlags.flagList.get(FlagEnum.MATERIALS_ACQUIRED)) {

@@ -2,7 +2,7 @@
 <div class="bag-box">
     <div class="title-bar"><span>bag</span><span>{{ storage.inventory.length + "/" + storage.inventoryCap }}</span></div>
     <div class="bag">
-        <span @click="$emit('chosen-item', idx, StorageType.BAG)" v-for="(item, idx) of storage.inventory" class="entry">{{ item.name }}</span>
+        <span @click="$emit('chosen-item', {idx: idx, type: StorageType.BAG})" v-for="(item, idx) of storage.inventory" class="entry">{{ item.name }}</span>
     </div>
 </div>
 </template>

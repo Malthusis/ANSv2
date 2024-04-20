@@ -27,12 +27,12 @@
     <div v-if="selectedType" class="control-box">
         <span class="choice-text">{{ getChoiceText }}</span>
         <div v-if="selectedType === StorageType.BAG" class="choice-box">
-            <button>To Storage</button>
+            <button :disabled="storage.storageFull" @click="moveItem(StorageType.STORAGE)">To Storage</button>
             <button>Equip</button>
             <button>Trash</button>
         </div>
         <div v-else-if="selectedType === StorageType.STORAGE" class="choice-box">
-            <button>To Bag</button>
+            <button :disabled="storage.bagFull" @click="moveItem(StorageType.BAG)">To Bag</button>
             <button>Equip</button>
             <button>Trash</button>
         </div>  
@@ -65,10 +65,20 @@ const getChoiceText = computed(() => {
     return "N/A"
 })
 
-function selectItem(itemNum: number, type: StorageType) {
-    console.log("selected Item " + itemNum);
-    selected.value = itemNum;
-    selectedType.value = type;
+//TODO: clean up.
+function selectItem(emit: any) {
+    selected.value = emit.idx ;
+    selectedType.value = emit.type;
+}
+
+function moveItem(target: StorageType) {
+    const idx = selected.value
+    const type = selectedType.value
+    selectedType.value = StorageType.UNDEFINED
+    selected.value = -1
+
+    const result = storage.moveItem(idx, type, target);
+    if (!result) { console.log('move failed.')}
 }
 
 </script>

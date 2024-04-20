@@ -1,6 +1,6 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { ItemType, Resource } from '@/enums'
+import { Resource, StorageType } from '@/enums'
 import type { Item } from '@/interfaces'
 import { useItemDatabase } from './itemDatabase'
 
@@ -13,6 +13,17 @@ export const useStorage = defineStore('storage', () => {
     const storage = ref<Item[]>([])
     const storageCap = ref<number>(5)
 
+    // -- COMPUTED --
+    const storageFull = computed(() => {
+        return storage.value.length >= storageCap.value
+    })
+
+    const bagFull = computed(() => {
+        return inventory.value.length >= inventoryCap.value
+    })
+
+
+    // -- FUNCTIONS --
     function gainResource(amnt:number, type: Resource){
         const resource = resources.value.get(type) || 0;
         if(resource + amnt <= resourceCap.value) {
@@ -47,6 +58,42 @@ export const useStorage = defineStore('storage', () => {
         }
     }
 
+    function moveItem(idx: number, source: StorageType, target: StorageType): boolean {
+        let item = {} as Item;
+
+        //take item out of appropriate storage.
+        if(idx > -1){
+            switch(source){
+                case StorageType.BAG:
+                    if (bagFull.value || inventory.value.length <= idx ) {
+                        return false;
+                    }
+                    item = inventory.value.splice(idx, 1)[0]
+                    break;
+                case StorageType.STORAGE:
+                    if(storageFull.value || storage.value.length <= idx) {
+                        return false;
+                    }
+                    item = storage.value.splice(idx, 1)[0]
+                    break;
+            }
+        } else {
+            return false;
+        }
+
+        //Put item in appropriate storage.
+        switch(target) {
+            case StorageType.BAG:
+                inventory.value.push(item)
+                return true;
+            case StorageType.STORAGE:
+                storage.value.push(item)
+                return true;
+        }
+
+        return false;
+    }
+
     function clearStorage() {
         storage.value = []
     }
@@ -54,7 +101,9 @@ export const useStorage = defineStore('storage', () => {
     return { 
         //State
         resources, resourceCap, inventory, inventoryCap, storage, storageCap,
+        // Computed
+        storageFull, bagFull,
         //Functions
-        gainResource, gainStorageItem, clearStorage, spendItem
+        gainResource, gainStorageItem, spendItem, moveItem, clearStorage 
     }
 })
