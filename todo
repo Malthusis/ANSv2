@@ -1,0 +1,25 @@
+//Link to formatting: https://marketplace.visualstudio.com/items?itemName=fabiospampinato.vscode-todo-plus#demo
+Alt+S marks a starting point
+Alt+D
+
+//Game Flow
+Fire -> Initial Explore -> Initial Craft -> Get Equips to explore new area and 
+Initial Features:
+    Combat Prep:
+        Canvas Test:
+            - Make a canvas above the Explore area.
+            - Set up a simple gradient background.
+            - ...and some sort of walking sprite.
+        Canvas Combat Start:
+            - Once the canvas is up, when combat is triggered, move the sprite back a bit and bring enemy sprite up.
+            - ...and open combat controls.
+        Combat Turn:
+            - Possibly make an auto-fight?
+    
+
+    -
+    -
+
+Formatting:
+    - Not done.
+    + Done!
