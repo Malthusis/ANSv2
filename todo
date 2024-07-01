@@ -7,8 +7,8 @@ Fire -> Initial Explore -> Initial Craft -> Get Equips to explore new area and
 Initial Features:
     Combat Prep:
         Canvas Test:
-            - Make a canvas above the Explore area.
-            - Set up a simple gradient background.
+            ✔ Make a canvas above the Explore area. @started(24-07-01 05:14) @done(24-07-01 05:43) @lasted(29m8s)
+            - Set up a simple gradient background. 
             - ...and some sort of walking sprite.
         Canvas Combat Start:
             - Once the canvas is up, when combat is triggered, move the sprite back a bit and bring enemy sprite up.

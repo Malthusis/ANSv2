@@ -12,6 +12,7 @@
     </div>
     <div v-show="!!exploring" class="explore-container not-exploring">
         <span class="explore-title">Exploring ...</span>
+        <ExploreVideoBox></ExploreVideoBox>
 
         <div class="loading-outer">
             <div class="loading-inner"></div>
@@ -39,10 +40,13 @@ import { ref } from 'vue';
 import Tabs from '@/components/Tabs.vue';
 import { useStorage } from '@/stores/storage';
 
+import ExploreVideoBox from '@/components/ExploreVideoBox.vue'
+
 
 const props = defineProps({
     active: String
 })
+
 
 const areaList = new Map<number, Area>([
     [1, { id: 1, name: "Scrap Heaps", unlocked: true, danger:"Threat Level: Minimal.", description: "The nearby mounds are full of discarded parts, broken wheels, and leaking containers of unknown substances. \n \n Shouldn't be hard to forage something useful out of this."}],
